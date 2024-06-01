@@ -1,0 +1,110 @@
+﻿@model System.Data.DataTable 
+
+@{
+    ViewBag.Title = "EditView";
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    <script>
+        function validation() {
+            let x= document.forms["forme"]["sname"].value;
+            if (x == "") {
+                alert("please enter the name");
+                return false;
+            }
+            let y = document.forms["forme"]["age"].value;
+            if (y == 0) {
+                alert("please enter the age");
+                return false;
+            }
+            let z = document.forms["forme"]["address"].value;
+            if (z == "") {
+                alert("please enter the address");
+                return false;
+            }
+            let g = document.forms["forme"]["countryList"].value;
+            if (g == 0) {
+                alert("please select the country");
+                return false;
+            }
+        }
+    </script>
+    <style>
+        .container {
+            margin-top: 5%;
+            background-color: lightgrey;
+            justify-content: center;
+            border-color: black;
+        }
+    </style>
+</head>
+<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <div class="container" align="center">
+        <form class="row g-3 needs-validation" name="forme" id="frmDetail" method="post" onsubmit="return validation()" action="@Url.Action("UpdateRecord")">
+            <div class="addstu">
+                <h2 align="center">Edit Form </h2>
+
+
+                <div class="col-md-3">
+                    <label for="sname" class="form-label" length="200px">Student Name</label> <br />
+                    <input type="text" class="form-control" id="sname" name="sname" value="@Model.Rows[0]["studentName"]" required />
+                </div>
+
+                <div class="col-md-3">
+                    <label for="age" class="form-label">Age</label> <br />
+                    <input type="number" class="form-control" id="age" name="age" min=1 value="@Model.Rows[0]["Age"]" required>
+                </div>
+                <br />
+                <div class="col-md-3">
+                    <label for="address" class="form-label">Address</label> <br />
+                   
+                        <input type="text" class="form-control" id="address" name="address" aria-describedby="inputGroupPrepend" maxlength="200" value="@Model.Rows[0]["Address"]" required>
+                    </div>
+                   
+          
+                <div class="col-md-3">
+                    <input type="hidden" class="form-control" id="sid" name="sid" value="@Model.Rows[0]["studentId"]" required>
+                </div>
+            
+               
+                  
+                <div class="col-mb-3">
+                    <label>Country Name</label>
+                    @Html.DropDownList("countryList", null, " --select-- ", htmlAttributes: new { @class = "form-select selectpicker w-25" })
+
+                    @*@Html.DropDownList("countryList", (IEnumerable<SelectListItem>)ViewBag.countryList, htmlAttributes: new { id = "countryList", @class = "form-select selectpicker w-25" })*@
+
+                </div>
+
+                    <div>
+
+                        @if (Model.Rows[0]["isactive"].ToString() == "True")
+                        {
+                            <input class="form-check-input" type="checkbox" name="isactive" id="isactive" checked required>
+                        }
+                        else
+                        {
+                            <input class="form-check-input" type="checkbox" name="isactive" id="isactive" required>
+                        }
+                        <label class="form-check-label" for="invalidCheck">
+                            Is Active
+                        </label>
+                    </div>
+                   
+                <div class="mb-md-4">
+                    <input type="submit" value="Submit" class="btn btn-primary" id="submit" name="action">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
